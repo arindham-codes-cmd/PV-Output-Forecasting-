@@ -1,2 +1,0 @@
-This file contains datasets used for the project. In this file, the datasets named Plant1_merged and Plant2_merged are obtained after cleaning and merging in the Colab notebook. 
-For further analysis, we have used merged datasets throughout till the forecasting process. 
