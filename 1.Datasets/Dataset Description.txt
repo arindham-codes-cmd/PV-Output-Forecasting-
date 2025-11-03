@@ -1,0 +1,26 @@
+Solar Power Generation Data
+
+This data has been gathered at two solar power plants in India over a 34 day period. It has two pairs of files - each pair has one power generation dataset and one sensor readings dataset. The power generation datasets are gathered at the inverter level - each inverter has multiple lines of solar panels attached to it. The sensor data is gathered at a plant level - single array of sensors optimally placed at the plant.
+
+the dataset files are something like this
+Plant_1_Generation_Data.csv , Plant_1_Weather_Sensor_Data.csv
+Plant_2_Generation_Data.csv , Plant_2_Weather_Sensor_Data.csv
+
+Columns of plant 1 generation data
+DATE_TIME	
+PLANT_ID	
+SOURCE_KEY	
+DC_POWER 	
+AC_POWER	 
+DAILY_YIELD	
+TOTAL_YIELD
+
+columns of plant 1 weather data
+DATE_TIME	
+PLANT_ID	
+SOURCE_KEY	
+AMBIENT_TEMPERATURE	
+MODULE_TEMPERATURE	
+IRRADIATION
+
+Similarly we have plant 2 generation and weather data.
