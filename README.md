@@ -260,3 +260,59 @@ Diagnosis:
 - After converting DC_POWER by dividing by 1000, the efficiency corrected to ~97–98%—which is realistic and healthy.
 
 ## Phase 3: Time Series Forecast Model - ARIMA & SARIMA  
+This phase focuses on building forecasting models to predict next-day solar energy generation using historical daily yield data. We used both ARIMA and SARIMA to benchmark performance and capture trends, seasonality, and residual noise.
+
+### Step 1: Daily Aggregation
+We grouped the merged datasets by DATE_TIME.dt.date and summed DAILY_YIELD to get daily totals. These were converted to MWh for clarity:
+
+daily_yield['DAILY_YIELD_MWh'] = round(daily_yield['DAILY_YIELD'] / 1e6, 2)
+
+This gave us 34 days of daily yield data per plant, which we stored in daily_df for modeling.
+
+### Step 2: Seasonal Decomposition
+Using seasonal_decompose(), we broke down each time series into:
+- Trend: Long-term direction of energy output
+- Seasonality: Daily cycles or repeating patterns
+- Residual: Random noise or anomalies
+
+<img src="/Visuals/5.Seasonal Decompose.png" width="600"/>
+Both plants showed clear seasonal patterns and smooth trends, validating the use of SARIMA.
+
+### Step 3: Stationarity Check (ADF Test)
+We applied the Augmented Dickey-Fuller test to check if the data was stationary:
+- Plant 1: p-value = 0.00007 → Stationary
+- Plant 2: p-value = 0.0389 → Stationary
+Since both passed the test (p ≤ 0.05), we proceeded without differencing.
+
+### Step 4: ACF & PACF Plots
+<img src="/Visuals/6.ACF Plot.png" width="600"/>
+<img src="/Visuals/7.PACF Plot.png" width="600"/>
+We plotted Autocorrelation (ACF) and Partial Autocorrelation (PACF) to identify lag dependencies. These plots helped us choose ARIMA parameters:
+- ARIMA Order: (2, 0, 2)
+- SARIMA Seasonal Order: (1, 1, 1, 7) → Weekly seasonality
+
+### Step 5: Train-Test Split
+We split the time series into:
+- Train: First 27 days
+- Test: Last 7 days
+  
+This setup allowed us to forecast the final week and compare predictions with actuals.
+
+### Step 6: ARIMA Modeling
+We fit an ARIMA(2,0,2) model and forecasted 7 days ahead. 
+<img src="/Visuals/8.ARIMA Plot.png" width="900"/>
+Visuals: Forecast lines closely followed actuals for Plant 1, with slightly more deviation in Plant 2.
+
+### Step 7: SARIMA Modeling
+We fit a SARIMA(2,0,2)(1,1,1,7) model to capture weekly seasonality. 
+<img src="/Visuals/9.SARIMA Plot.png" width="900"/>
+
+Interpretation:
+SARIMA captured seasonality but slightly overfit Plant 1’s fluctuations.
+ARIMA performed better for Plant 1; SARIMA was comparable for Plant 2.
+Key Takeaways
+- ARIMA is effective for short-term yield forecasting when seasonality is minimal or stable.
+- SARIMA adds value when patterns repeat weekly or monthly.
+  Forecasting accuracy depends on data quality, inverter consistency, and weather variability.
+
+
