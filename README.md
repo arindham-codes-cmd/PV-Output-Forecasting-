@@ -301,6 +301,7 @@ This setup allowed us to forecast the final week and compare predictions with ac
 ### Step 6: ARIMA Modeling
 We fit an ARIMA(2,0,2) model and forecasted 7 days ahead. 
 <img src="/Visuals/8.ARIMA Plot.png" width="900"/>
+
 Visuals: Forecast lines closely followed actuals for Plant 1, with slightly more deviation in Plant 2.
 
 ### Step 7: SARIMA Modeling
@@ -315,4 +316,14 @@ Key Takeaways
 - SARIMA adds value when patterns repeat weekly or monthly.
   Forecasting accuracy depends on data quality, inverter consistency, and weather variability.
 
+##  Results & Insights
+The forecasting models, ARIMA and SARIMA successfully predicted solar power output with reasonable accuracy across both plants. Despite minor deviations, the predictions aligned well with actual trends, validating the use of time series techniques for short-term energy planning.
+
+The Power BI dashboard, powered by these forecasts, enables energy planners to:
+ - Anticipate dips in solar generation due to weather variability or system inefficiencies
+ - Optimise energy dispatch by aligning predicted output with grid demand
+ - Schedule maintenance proactively, especially for underperforming inverters
+ - Compare plant performance and conversion efficiency in real-time
+   
+Together, the models and dashboard form a robust decision-support system for solar operations and turning raw data into actionable insights.
 
