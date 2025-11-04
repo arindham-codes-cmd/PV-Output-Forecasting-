@@ -201,6 +201,62 @@ What this does:
 ### Step 9: Feature Engineering 
 Here, we remerge the data, then we go ahead and extract date time components required for modeling. 
 
+## Phase 2: Visual Plots, Insights and Analysis
 
+This phase uses the merged datasets to uncover operational patterns and performance differences between Plant 1 and Plant 2. Each plot is backed by code logic and real-world interpretation.
 
+1. Irradiation vs DC Power
 
+   <img src="/Visuals/2.Irradiation vs DC Power.png" width="600"/>
+We plotted daily average irradiation against daily DC power output for both plants. The Pearson correlation coefficient was:
+- Plant 1: 0.993 → near-perfect linear relationship
+- Plant 2: 0.871 → weaker correlation, more scatter
+  
+Interpretation:
+- In Plant 1, higher sunlight (irradiation) consistently leads to higher DC power output.
+- In Plant 2, even when irradiation increases, DC power remains low or inconsistent.
+- 
+Possible reasons:
+- Inverter degradation or partial shading
+- Sensor misalignment or calibration issues
+- Maintenance gaps or panel-level faults
+- Data quality issues (e.g., timestamp mismatches or unit inconsistencies)
+
+2. Daily Yield Comparison:
+
+We grouped data by DATE_TIME.dt.date and aggregated DAILY_YIELD to compare total daily energy output in MWh.
+
+<img src="/Visuals/3.Daily_Yield Comparison.png" width="900"/>
+
+Insights:
+- Plant 1 consistently outperforms Plant 2 across most days.
+- The gap widens on high-irradiation days, suggesting better conversion and fewer losses.
+  
+This grouped data was stored in a list and later concatenated into a combined DataFrame for plotting.
+
+3. Hourly AC Power Trend (Peak Hour Analysis)
+<img src="/Visuals/4.AC Power Trend Hourly.png" width="600"/>
+We plotted average AC power per hour across all days.
+- Plant 1 peaks smoothly between 11 AM to 1 PM, averaging 800–850 Watts per inverter
+- Plant 2 shows erratic peaks and lower output (~600 Watts max)
+  
+Interpretation:
+- If each plant has 20 inverters:
+- Plant 1 → 20 × 800 = 16,000 Watts or 16 kW peak AC output
+- Plant 2 → 20 × 600 = 12,000 Watts or 12 kW
+  
+This suggests Plant 1 has better panel exposure, inverter health, or fewer operational disruptions.
+
+4. Inverter Conversion Efficiency (DC to AC)
+
+We calculated energy using:
+<pre>Energy (MWh) = Power (W or kW) × Time (0.25 hours) / 1e6</pre>
+Then grouped by SOURCE_KEY_x to compute total DC and AC energy per inverter and their conversion ratio:
+<pre>Conversion Ratio (%) = (AC Energy / DC Energy) × 100 </pre>
+Initial finding:
+- Plant 1 showed ~9% conversion, which is unrealistically low.
+Diagnosis:
+- DC_POWER in Plant 1 was likely in Watts, while AC_POWER was in kW
+- After converting DC_POWER by dividing by 1000, the efficiency corrected to ~97–98%—which is realistic and healthy.
+
+## Phase 3: Time Series Forecast Model - ARIMA & SARIMA  
