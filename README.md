@@ -1,3 +1,5 @@
+**Originally developed by Arindham Krishna**  
+GitHub: [arindham-codes-cmd](https://github.com/arindham-codes-cmd)
 # PV-Output-Forecasting
 ## Project Overview
 - This project explores solar energy forecasting using time series models like ARIMA and SARIMA. We analyse generation and weather sensor data from two solar plants, the goal is to predict daily energy output and support smarter grid management, load balancing, and consumer awareness.
@@ -326,4 +328,14 @@ The Power BI dashboard, powered by these forecasts, enables energy planners to:
  - Compare plant performance and conversion efficiency in real-time
    
 Together, the models and dashboard form a robust decision-support system for solar operations and turning raw data into actionable insights.
+
+## Credits
+
+This project was originally created and maintained by **Arindham Krishna**.  
+All logic, forecasting methodology, and data handling scripts were authored by [arindham-codes-cmd](https://github.com/arindham-codes-cmd).
+
+## Fork Notice
+
+If you’re viewing this project from a forked repository, please note that the original version was developed by **Arindham Krishna**.  
+Visit the source repo here: [PV-Output-Forecasting](https://github.com/arindham-codes-cmd/PV-Output-Forecasting)
 
